@@ -1,5 +1,5 @@
 import streamlit as st
-from db import get_db_connection
+from database import get_db_connection
 
 st.title("🗑 Delete a Record")
 
