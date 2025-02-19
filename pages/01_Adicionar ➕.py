@@ -1,5 +1,6 @@
 import streamlit as st
 from database import get_db_connection
+from datetime import date
 
 def get_startups():
     connection = get_db_connection()
@@ -54,6 +55,7 @@ def page_programador():
     nome = st.text_input("Nome do Programador")
     genero = st.selectbox("Gênero", ["M", "F"])
     data_nasc = st.date_input("Data de Nascimento")
+    idade = (date.today() - data_nasc).days // 365
     
     startups = get_startups()
     startup_nome = st.selectbox("Startup", list(startups.keys()))
@@ -62,8 +64,12 @@ def page_programador():
     linguagens = get_linguagens()
     linguagem_nome = st.selectbox("Linguagem Utilizada", list(linguagens.keys()))
     id_linguagem = linguagens[linguagem_nome] if linguagem_nome else None
-
+    
     if st.button("Adicionar"):
+        if idade < 18:
+            st.error("Programadores devem ter pelo menos 18 anos de idade.")
+            return
+        
         connection = get_db_connection()
         if connection:
             cursor = connection.cursor()
@@ -80,7 +86,6 @@ def page_programador():
             st.success("Programador adicionado com sucesso!")
         else:
             st.error("Falha na conexão com o banco de dados")
-
 
 def page_dependente():
     st.title("Adicionar Dependente")
