@@ -1,4 +1,5 @@
 import streamlit as st
+from datetime import date
 from database import get_db_connection
 
 def get_records(query):
@@ -22,6 +23,10 @@ def update_record(query, values):
     else:
         st.error("Falha na conexão com o banco de dados")
 
+def calcular_idade(data_nasc):
+    hoje = date.today()
+    return hoje.year - data_nasc.year - ((hoje.month, hoje.day) < (data_nasc.month, data_nasc.day))
+
 def page_update_startup():
     st.title("Atualizar Startup 🔃")
     startups = get_records("SELECT ID_Startup, Nome_Startup FROM Startup")
@@ -40,9 +45,14 @@ def page_update_programador():
     id_startup = st.selectbox("Nova Empresa", list(startups.keys()))
     genero = st.selectbox("Novo Gênero", ["M", "F"])
     data_nasc = st.date_input("Nova Data de Nascimento")
+    
     if st.button("Atualizar"):
-        update_record("UPDATE Programador SET Nome_Programador=%s, Genero_Programador=%s, Data_Nasc_Programador=%s, ID_Startup=%s WHERE ID_Programador=%s", (nome, genero, data_nasc, startups[id_startup], programadores[id_programador]))
-
+        idade = calcular_idade(data_nasc)
+        if idade < 18:
+            st.error("O programador precisa ter pelo menos 18 anos para ser registrado.")
+        else:
+            update_record("UPDATE Programador SET Nome_Programador=%s, Genero_Programador=%s, Data_Nasc_Programador=%s, ID_Startup=%s WHERE ID_Programador=%s", 
+                          (nome, genero, data_nasc, startups[id_startup], programadores[id_programador]))
 def page_update_dependente():
     st.title("Atualizar Dependente")
     dependentes = get_records("SELECT ID_Dependente, Nome_Dependente FROM Dependente")
