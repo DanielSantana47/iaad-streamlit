@@ -104,7 +104,7 @@ if connection:
         ])
         df_dependente = df_dependente.reset_index(
             drop=True)  # Remover índice automático
-        df_dependente = formatar_data(df, ["Data_Nasc_Programador"])
+        df_dependente = formatar_data(df_dependente, ["Data_Nasc_Dependente"])
         st.dataframe(df_dependente, use_container_width=True)
     else:
         st.warning("Nenhum dependente encontrado no banco de dados.")
