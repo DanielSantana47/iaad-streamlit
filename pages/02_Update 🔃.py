@@ -8,7 +8,7 @@ def get_records(query):
         cursor.execute(query)
         records = cursor.fetchall()
         connection.close()
-        return {f"{r[0]} - {r[1]}": r[0] for r in records}
+        return {f"{r[1]} - {r[0]}": r[0] for r in records}
     return {}
 
 def update_record(query, values):
@@ -23,7 +23,7 @@ def update_record(query, values):
         st.error("Falha na conexão com o banco de dados")
 
 def page_update_startup():
-    st.title("Atualizar Startup")
+    st.title("Atualizar Startup 🔃")
     startups = get_records("SELECT ID_Startup, Nome_Startup FROM Startup")
     id_startup = st.selectbox("Startup", list(startups.keys()))
     nome = st.text_input("Novo Nome da Startup")

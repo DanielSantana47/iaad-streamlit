@@ -8,7 +8,7 @@ def get_startups():
         cursor.execute("SELECT ID_Startup, Nome_Startup FROM Startup")
         startups = cursor.fetchall()
         connection.close()
-        return {f"{nome} (ID: {id_})": id_ for id_, nome in startups}
+        return {f"{nome} - {id_}": id_ for id_, nome in startups}
     return {}
 
 def get_programadores():
@@ -18,7 +18,7 @@ def get_programadores():
         cursor.execute("SELECT ID_Programador, Nome_Programador FROM Programador")
         programadores = cursor.fetchall()
         connection.close()
-        return {f"{nome} (ID: {id_})": id_ for id_, nome in programadores}
+        return {f"{nome} - {id_}": id_ for id_, nome in programadores}
     return {}
 
 def get_linguagens():
@@ -28,7 +28,7 @@ def get_linguagens():
         cursor.execute("SELECT ID_Linguagem, Nome_Linguagem FROM Linguagem")
         linguagens = cursor.fetchall()
         connection.close()
-        return {f"{nome} (ID: {id_})": id_ for id_, nome in linguagens}
+        return {f"{nome} - {id_}": id_ for id_, nome in linguagens}
     return {}
 
 def insert_record(query, values):
@@ -43,7 +43,7 @@ def insert_record(query, values):
         st.error("Falha na conexão com o banco de dados")
 
 def page_startup():
-    st.title("Adicionar Startup")
+    st.title("Adicionar Startup ➕")
     nome = st.text_input("Nome da Startup")
     cidade = st.text_input("Cidade Sede")
     if st.button("Adicionar"):
@@ -114,15 +114,15 @@ def page_programador_linguagem():
 
 # Sidebar para navegação
 st.sidebar.title("Navegação")
-pagina = st.sidebar.radio("Escolha uma página", ["Startup", "Programador", "Dependente", "Linguagem", "Programador x Linguagem"])
+pagina = st.sidebar.radio("Escolha uma página", ["Adicionar Startup", "Adicionar Programador", "Adicionar Dependente", "Adicionar Linguagem", "Adicionar Programador x Linguagem"])
 
-if pagina == "Startup":
+if pagina == "Adicionar Startup":
     page_startup()
-elif pagina == "Programador":
+elif pagina == "Adicionar Programador":
     page_programador()
-elif pagina == "Dependente":
+elif pagina == "Adicionar Dependente":
     page_dependente()
-elif pagina == "Linguagem":
+elif pagina == "Adicionar Linguagem":
     page_linguagem()
-elif pagina == "Programador x Linguagem":
+elif pagina == "Adicionar Programador x Linguagem":
     page_programador_linguagem()
