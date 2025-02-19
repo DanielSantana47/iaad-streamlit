@@ -8,7 +8,7 @@ def get_records(query):
         cursor.execute(query)
         records = cursor.fetchall()
         connection.close()
-        return {f"{r[0]} - {r[1]}": r[0] for r in records}
+        return {f"{r[1]} - {r[0]}": r[0] for r in records}
     return {}
 
 def delete_record(query, values):
@@ -26,7 +26,7 @@ def delete_record(query, values):
         st.error("Falha na conexão com o banco de dados")
 
 def page_delete_startup():
-    st.title("Deletar Startup")
+    st.title("Deletar Startup 🗑")
     startups = get_records("SELECT ID_Startup, Nome_Startup FROM Startup")
     id_startup = st.selectbox("Selecione a Startup para deletar", list(startups.keys()))
     if st.button("Deletar"):
