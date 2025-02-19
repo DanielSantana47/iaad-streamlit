@@ -76,15 +76,17 @@ DB_PASSWORD=
 
 DB_DATABASE= normalizacao
 
-Para preencher as informações, abra seu MySQL e preencha assim: 
+Para preencher as informações, abra seu MySQL e preencha assim:
 
-IMG
+![Infos](https://github.com/user-attachments/assets/3f163e2d-f205-4d3b-aa09-a5cf60a4d395)
+
 
 Caso tenha colocado uma senha na conexão coloque em "DB_PASSWORD", caso não pode deixar vazio.
 
 Para preencher o ultimo basta nomear com o esquema no qual as tabelas foram adicionadas. Como exemplo: 
 
-IMG
+![image](https://github.com/user-attachments/assets/0c81a847-45e3-4829-8bc7-e242274e154c)
+
 
 DB_DATABASE= startup
 
