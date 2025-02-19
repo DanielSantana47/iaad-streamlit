@@ -6,6 +6,14 @@ st.set_page_config(page_title="📊 Tabelas do BD", page_icon="📊", layout="wi
 
 st.title("📊 Tabelas do BD")
 
+
+def formatar_data(df, colunas_data):
+    for coluna in colunas_data:
+        df[coluna] = pd.to_datetime(
+            df[coluna], dayfirst=True).dt.strftime('%d/%m/%Y')
+    return df
+
+
 # Obter conexão com o banco
 connection = get_db_connection()
 
@@ -15,15 +23,16 @@ if connection:
     # Exibir tabela de Programadores
     st.subheader("Programadores")
     cursor.execute(
-        "SELECT ID_Programador, ID_Startup, Nome_Programador, Genero_Programador, Data_Nasc_Programador FROM programador"
+        "SELECT ID_Programador, ID_Startup, Nome_Programador, Genero_Programador, Data_Nasc_Programador,  timestampdiff(YEAR, Data_Nasc_Programador, NOW()) FROM programador"
     )
     result = cursor.fetchall()
 
     if result:
         df = pd.DataFrame(result, columns=[
-            "ID_Programador", "ID_Startup", "Nome_Programador", "Genero_Programador", "Data_Nasc_Programador"
+            "ID_Programador", "ID_Startup", "Nome_Programador", "Genero_Programador", "Data_Nasc_Programador", "Idade"
         ])
         df = df.reset_index(drop=True)  # Remover índice automático
+        df = formatar_data(df, ["Data_Nasc_Programador"])
         st.dataframe(df, use_container_width=True)
     else:
         st.warning("Nenhum programador encontrado no banco de dados.")
@@ -83,7 +92,7 @@ if connection:
     # Exibir tabela de Dependentes
     st.subheader("Dependentes")
     cursor.execute(
-        "SELECT ID_Dependente, ID_Responsavel,Nome_Dependente, Parentesco_Dependente, Data_Nasc_Dependente FROM dependente"
+        "SELECT ID_Dependente, ID_Responsavel,Nome_Dependente, Parentesco_Dependente, Data_Nasc_Dependente, timestampdiff(YEAR, Data_Nasc_Dependente, NOW()) FROM dependente"
     )
     result = cursor.fetchall()
 
@@ -91,10 +100,11 @@ if connection:
 
     if result:
         df_dependente = pd.DataFrame(result, columns=[
-            "ID_Dependente", "ID_Responsavel", "Nome_Dependente", "Parentesco_Dependente", "Data_Nasc_Dependente"
+            "ID_Dependente", "ID_Responsavel", "Nome_Dependente", "Parentesco_Dependente", "Data_Nasc_Dependente", "Idade"
         ])
         df_dependente = df_dependente.reset_index(
             drop=True)  # Remover índice automático
+        df_dependente = formatar_data(df, ["Data_Nasc_Programador"])
         st.dataframe(df_dependente, use_container_width=True)
     else:
         st.warning("Nenhum dependente encontrado no banco de dados.")
