@@ -83,7 +83,7 @@ if connection:
     # Exibir tabela de Dependentes
     st.subheader("Dependentes")
     cursor.execute(
-        "SELECT ID_Dependente, ID_Responsavel, Parentesco_Dependente, Data_Nasc_Dependente FROM dependente"
+        "SELECT ID_Dependente, ID_Responsavel,Nome_Dependente, Parentesco_Dependente, Data_Nasc_Dependente FROM dependente"
     )
     result = cursor.fetchall()
 
@@ -91,7 +91,7 @@ if connection:
 
     if result:
         df_dependente = pd.DataFrame(result, columns=[
-            "ID_Dependente", "ID_Responsavel", "Parentesco_Dependente", "Data_Nasc_Dependente"
+            "ID_Dependente", "ID_Responsavel", "Nome_Dependente", "Parentesco_Dependente", "Data_Nasc_Dependente"
         ])
         df_dependente = df_dependente.reset_index(
             drop=True)  # Remover índice automático
