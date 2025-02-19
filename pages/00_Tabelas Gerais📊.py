@@ -15,13 +15,13 @@ if connection:
     # Exibir tabela de Programadores
     st.subheader("Programadores")
     cursor.execute(
-        "SELECT ID_Programador, ID_Startup, Nome_Programador, Genero_Programador, Data_Nasc_Programador FROM programador"
+        "SELECT ID_Programador, ID_Startup, Nome_Programador, Genero_Programador, Data_Nasc_Programador,  timestampdiff(YEAR, Data_Nasc_Programador, NOW()) FROM programador"
     )
     result = cursor.fetchall()
 
     if result:
         df = pd.DataFrame(result, columns=[
-            "ID_Programador", "ID_Startup", "Nome_Programador", "Genero_Programador", "Data_Nasc_Programador"
+            "ID_Programador", "ID_Startup", "Nome_Programador", "Genero_Programador", "Data_Nasc_Programador", "Idade"
         ])
         df = df.reset_index(drop=True)  # Remover índice automático
         st.dataframe(df, use_container_width=True)
@@ -83,7 +83,7 @@ if connection:
     # Exibir tabela de Dependentes
     st.subheader("Dependentes")
     cursor.execute(
-        "SELECT ID_Dependente, ID_Responsavel,Nome_Dependente, Parentesco_Dependente, Data_Nasc_Dependente FROM dependente"
+        "SELECT ID_Dependente, ID_Responsavel,Nome_Dependente, Parentesco_Dependente, Data_Nasc_Dependente, timestampdiff(YEAR, Data_Nasc_Dependente, NOW()) FROM dependente"
     )
     result = cursor.fetchall()
 
@@ -91,7 +91,7 @@ if connection:
 
     if result:
         df_dependente = pd.DataFrame(result, columns=[
-            "ID_Dependente", "ID_Responsavel", "Nome_Dependente", "Parentesco_Dependente", "Data_Nasc_Dependente"
+            "ID_Dependente", "ID_Responsavel", "Nome_Dependente", "Parentesco_Dependente", "Data_Nasc_Dependente", "Idade"
         ])
         df_dependente = df_dependente.reset_index(
             drop=True)  # Remover índice automático
