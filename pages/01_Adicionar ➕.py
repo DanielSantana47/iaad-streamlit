@@ -54,11 +54,33 @@ def page_programador():
     nome = st.text_input("Nome do Programador")
     genero = st.selectbox("Gênero", ["M", "F"])
     data_nasc = st.date_input("Data de Nascimento")
+    
     startups = get_startups()
     startup_nome = st.selectbox("Startup", list(startups.keys()))
     id_startup = startups[startup_nome] if startup_nome else None
+    
+    linguagens = get_linguagens()
+    linguagem_nome = st.selectbox("Linguagem Utilizada", list(linguagens.keys()))
+    id_linguagem = linguagens[linguagem_nome] if linguagem_nome else None
+
     if st.button("Adicionar"):
-        insert_record("INSERT INTO Programador (Nome_Programador, Genero_Programador, Data_Nasc_Programador, ID_Startup) VALUES (%s, %s, %s, %s)", (nome, genero, data_nasc, id_startup))
+        connection = get_db_connection()
+        if connection:
+            cursor = connection.cursor()
+            sql_programador = "INSERT INTO Programador (Nome_Programador, Genero_Programador, Data_Nasc_Programador, ID_Startup) VALUES (%s, %s, %s, %s)"
+            cursor.execute(sql_programador, (nome, genero, data_nasc, id_startup))
+            id_programador = cursor.lastrowid  # Captura o ID recém-inserido
+            
+            if id_linguagem:
+                sql_linguagem = "INSERT INTO Programador_Linguagem (ID_Programador, ID_Linguagem) VALUES (%s, %s)"
+                cursor.execute(sql_linguagem, (id_programador, id_linguagem))
+            
+            connection.commit()
+            connection.close()
+            st.success("Programador adicionado com sucesso!")
+        else:
+            st.error("Falha na conexão com o banco de dados")
+
 
 def page_dependente():
     st.title("Adicionar Dependente")
