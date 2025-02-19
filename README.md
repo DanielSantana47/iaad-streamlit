@@ -92,7 +92,7 @@ DB_DATABASE= startup
 
 Não esqueça de salvar todo o arquivo.
 
-### 5º Passo - Acessar o streamlit
+### 6º Passo - Acessar o streamlit
 
 
 Com o ambiente virtual acessado, os requirements baixados e conexões feitas é possível agora rodar o streamlit para visualização.
