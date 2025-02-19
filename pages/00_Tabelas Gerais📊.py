@@ -21,7 +21,7 @@ if connection:
     cursor = connection.cursor()
 
     # Exibir tabela de Programadores
-    st.subheader("Programadores")
+    st.subheader("Programadores 👩‍💻")
     cursor.execute(
         "SELECT ID_Programador, ID_Startup, Nome_Programador, Genero_Programador, Data_Nasc_Programador,  timestampdiff(YEAR, Data_Nasc_Programador, NOW()) FROM programador"
     )
@@ -38,7 +38,7 @@ if connection:
         st.warning("Nenhum programador encontrado no banco de dados.")
 
     # Exibir tabela de Startups
-    st.subheader("Startups")
+    st.subheader("Startups 🏛")
     cursor.execute(
         "SELECT ID_Startup, Nome_Startup, Cidade_Sede FROM startup"
     )
@@ -55,7 +55,7 @@ if connection:
         st.warning("Nenhuma startup encontrada no banco de dados.")
 
     # Exibir tabela de Linguagens
-    st.subheader("Linguagens")
+    st.subheader("Linguagens 📚")
     cursor.execute(
         "SELECT ID_Linguagem, Nome_Linguagem FROM linguagem"
     )
@@ -72,7 +72,7 @@ if connection:
         st.warning("Nenhuma linguagem encontrada no banco de dados.")
 
     # Exibir tabela de Programador_Linguagem
-    st.subheader("Relação Programador - Linguagem")
+    st.subheader("Relação Programador - Linguagem ✍")
     cursor.execute(
         "SELECT ID_Programador, ID_Linguagem FROM programador_linguagem"
     )
@@ -90,7 +90,7 @@ if connection:
             "Nenhuma relação programador-linguagem encontrada no banco de dados.")
 
     # Exibir tabela de Dependentes
-    st.subheader("Dependentes")
+    st.subheader("Dependentes 🧒")
     cursor.execute(
         "SELECT ID_Dependente, ID_Responsavel,Nome_Dependente, Parentesco_Dependente, Data_Nasc_Dependente, timestampdiff(YEAR, Data_Nasc_Dependente, NOW()) FROM dependente"
     )
